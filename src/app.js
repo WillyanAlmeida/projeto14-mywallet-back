@@ -16,7 +16,7 @@ dotenv.config()
 
 const mongoClient = new MongoClient(process.env.DATABASE_URL);
 await mongoClient.connect();
-export const db = mongoClient.db("MyWallet");
+export const db = mongoClient.db();
 
 app.post("/sign-up", signup);
 
