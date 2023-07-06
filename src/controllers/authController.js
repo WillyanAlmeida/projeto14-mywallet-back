@@ -13,12 +13,13 @@ export async function signup(req, res) {
         password: joi.string().min(3)
     })
 
-    const formsignup = schemasignup.validate(req.body, { abortEarly: false })
+    let formsignup = schemasignup.validate(req.body, { abortEarly: false })
     if (formsignup.error) return res.status(422).send("Todos os campos são obrigatórios!")
 
     try {
-        const user = await db.collection('users').findOne({ email });
-        if (!user) return res.status(409).send("E-mail de usuário ja cadastrado!");
+        let user = await db.collection('users').findOne({ email });
+        console.log(user)
+        if (user) return res.status(409).send("E-mail de usuário ja cadastrado!");
 
         const passwordHashed = bcrypt.hashSync(req.body.password, 10);
         delete req.body.password;
