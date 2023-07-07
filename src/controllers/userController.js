@@ -1,20 +1,20 @@
 import { v4 as uuid } from "uuid";
 import bcrypt from 'bcrypt';
-import { db } from "../app.js";
-import joi from 'joi';
+import { db } from "../database/databaseconnections.js";
+
 
 export async function signup(req, res) {
     const { name, email } = req.body
     console.log(req.body)
 
-    const schemasignup = joi.object({
-        name: joi.string().required(),
-        email: joi.string().email().required(),
-        password: joi.string().min(3)
-    })
+    function validateSchema(body) {
 
-    let formsignup = schemasignup.validate(req.body, { abortEarly: false })
-    if (formsignup.error) return res.status(422).send("Todos os campos são obrigatórios!")
+        let formsignup = schemasignup.validate(req.body, { abortEarly: false })
+        if (formsignup.error) {
+            const erros = validation.error.details.map(detail=>detail.message)
+            return res.status(422).send(erros)
+        }
+    }
 
     try {
         let user = await db.collection('users').findOne({ email });
@@ -38,10 +38,6 @@ export async function signup(req, res) {
 export async function signin(req, res) {
     const { email, password } = req.body;
 
-    const schemasignin = joi.object({
-        email: joi.string().email().required(),
-        password: joi.string().min(3)
-    })
 
     const formsignup = schemasignin.validate(req.body, { abortEarly: false })
     if (formsignup.error) return res.status(422).send("Todos os campos são obrigatórios!")
