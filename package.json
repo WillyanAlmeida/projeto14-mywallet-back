@@ -12,7 +12,7 @@
   "name": "projeto14-mywallet-back",
   "type": "module",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/app.js",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
