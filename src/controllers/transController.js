@@ -1,5 +1,6 @@
 
 import { db } from "../database/databaseconnections.js";
+import dayjs from "dayjs";
 
 
 export async function transactionreg(req, res) {
@@ -9,7 +10,7 @@ export async function transactionreg(req, res) {
     try {
      
 
-        db.collection("transactions").insertOne({ userId: id, value, description, type, date: dayjs().format("L") });
+        db.collection("transactions").insertOne({ userId: id, value, description, type, date: dayjs().format('MM/DD') });
 
         res.status(200).send("ok");
     }
