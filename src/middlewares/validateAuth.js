@@ -8,6 +8,8 @@ export async function validateAuth(req, res, next) {
     try {
         const sessions = await db.collection("sessions").findOne({ token })
         if (!sessions) return res.sendStatus(401)
+
+        res.locals.sessions = sessions;
         next()
     } catch (err) {
         res.status(500).send(err.message)
