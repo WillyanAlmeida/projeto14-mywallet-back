@@ -22,7 +22,7 @@ export async function transactionget (req, res){
 
 try{
     const transactions = await db.collection('transactions').find({userID: res.locals.sessions.userID}).toArray();
-    res.status(200).send(transactions);
+    res.status(200).send(transactions.reverse());
 
 } catch (error) {
         console.log(error);
