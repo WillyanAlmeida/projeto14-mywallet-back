@@ -21,8 +21,9 @@ export async function transactionreg(req, res) {
 export async function transactionget (req, res){
 
 try{
-    const transactions = await db.collection('transactions').find({userID: res.locals.sessions.userID}).toArray();
-    res.status(200).send(transactions.reverse());
+    const transactions = (await db.collection('transactions').find({userID: res.locals.sessions.userID}).toArray()).reverse();
+    
+    res.status(200).send((transactions));
 
 } catch (error) {
         console.log(error);
